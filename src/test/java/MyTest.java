@@ -57,12 +57,18 @@ public class MyTest {
         passwordField.sendKeys(superuser_password);
         submitButton.click();
 
-        WebElement usernameContainer = driver.findElement(By.cssSelector("#profile span"));
+        //  проверка логина
+        //  WebElement usernameContainer = driver.findElement(By.cssSelector("#profile span"));
         //  Assert.assertEquals(superuser_name, usernameContainer.getText());
-        // если не совпадает, то вызывается исключение
+        //  если не совпадает, то вызывается исключение
 
+        // находим по id элемент добавления пользователя
         WebElement adduserButton = driver.findElement(By.id("add-person"));
+
+        // проверяем, если элемент отображается, значит пользователь имеет админ права
         if (adduserButton.isDisplayed() == false) {System.out.println("Админ прав не обнаружено!");}
+
+        // если элемент не отображается, значит пользователь админ прав не имеет
         else if (adduserButton.isDisplayed() == true) {System.out.println("Админ права есть");}
 
     }
