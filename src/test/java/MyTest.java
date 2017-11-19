@@ -1,3 +1,4 @@
+import org.apache.http.util.Asserts;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,42 +36,54 @@ public class MyTest {
 
 
     @After
-    public void Endings()
-    {
+    public void Endings() {
         driver.quit();
     }
-
-
 
 
     @Test
     public void LoginTest() {
 
         driver.navigate().to("http://at.pflb.ru/matrixboard2/");
-
-        WebElement loginField    =     driver.findElement(By.id("login-username"));
-        WebElement passwordField =     driver.findElement(By.id("login-password"));
-        WebElement submitButton  =     driver.findElement(By.id("login-button"));
-
+        WebElement loginField =     driver.findElement(By.id("login-username"));
+        WebElement passwordField =  driver.findElement(By.id("login-password"));
+        WebElement submitButton =   driver.findElement(By.id("login-button"));
 
         loginField.sendKeys(superuser_name);
         passwordField.sendKeys(superuser_password);
         submitButton.click();
 
         //  проверка логина
-        //  WebElement usernameContainer = driver.findElement(By.cssSelector("#profile span"));
-        //  Assert.assertEquals(superuser_name, usernameContainer.getText());
+        WebElement usernameContainer = driver.findElement(By.cssSelector("#profile span"));
+        Assert.assertEquals(superuser_name, usernameContainer.getText());
         //  если не совпадает, то вызывается исключение
 
-        // находим по id элемент добавления пользователя
+    }
+
+
+    @Test
+    public void adminTest()
+
+    {
+        driver.navigate().to("http://at.pflb.ru/matrixboard2/");
+        WebElement loginField =     driver.findElement(By.id("login-username"));
+        WebElement passwordField =  driver.findElement(By.id("login-password"));
+        WebElement submitButton =   driver.findElement(By.id("login-button"));
+
+        loginField.sendKeys(superuser_name);
+        passwordField.sendKeys(superuser_password);
+        submitButton.click();
+
+        // находим по id, элемент который добавляет пользователя
         WebElement adduserButton = driver.findElement(By.id("add-person"));
 
-        // проверяем, если элемент отображается, значит пользователь имеет админ права
-        if (adduserButton.isDisplayed() == false) {System.out.println("Админ прав не обнаружено!");}
-
-        // если элемент не отображается, значит пользователь админ прав не имеет
-        else if (adduserButton.isDisplayed() == true) {System.out.println("Админ права есть");}
-
+        // проверяем, отображается он или нет. Если нет, то админ прав нет
+        Assert.assertTrue("Ошибка, админ прав нет",adduserButton.isDisplayed() == true);
     }
+
+
 }
+
+
+
 
